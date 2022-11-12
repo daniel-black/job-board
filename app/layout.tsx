@@ -10,7 +10,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${sono.className}`}>
+    <html lang="en" >
       <head />
       <body>
         <GlobalNavbar />
