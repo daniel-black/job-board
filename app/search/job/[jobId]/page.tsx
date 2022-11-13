@@ -48,48 +48,44 @@ export default async function JobPage({ params, searchParams }: {
           )}
         </div>
 
-        <details className="p-3 mt-3 rounded-lg bg-yellow-50 border" open>
-          <summary className="cursor-pointer">Job Summary</summary>
-          <p className="p-3 mt-3 rounded-lg bg-yellow-100 border">{j.UserArea.Details?.JobSummary}</p>
-        </details>
-
-        <details className="p-3 mt-3 rounded-lg bg-yellow-50 border">
-          <summary className="cursor-pointer">Requirements</summary>
-          <p className="p-3 mt-3 rounded-lg bg-yellow-100 border">{j.UserArea.Details?.Requirements}</p>
-        </details>
-
-        <details className="p-3 mt-3 rounded-lg bg-yellow-50 border">
-          <summary className="cursor-pointer">Education</summary>
-          <p className="p-3 mt-3 rounded-lg bg-yellow-100 border">{j.UserArea.Details?.Education}</p>
-        </details>
-
-        <details className="p-3 mt-3 rounded-lg bg-yellow-50 border">
-          <summary className="cursor-pointer">Required Documents</summary>
-          <p className="p-3 mt-3 rounded-lg bg-yellow-100 border">{j.UserArea.Details?.RequiredDocuments}</p>
-        </details>
-
-        <details className="p-3 mt-3 rounded-lg bg-yellow-50 border">
-          <summary className="cursor-pointer">Evaluations</summary>
-          <p className="p-3 mt-3 rounded-lg bg-yellow-100 border">{j.UserArea.Details?.Evaluations}</p>
-        </details>
-
-        <details className="p-3 mt-3 rounded-lg bg-yellow-50 border">
-          <summary className="cursor-pointer">How To Apply</summary>
-          <p className="p-3 mt-3 rounded-lg bg-yellow-100 border">{j.UserArea.Details?.HowToApply}</p>
-        </details>
-
-        <details className="p-3 mt-3 rounded-lg bg-yellow-50 border">
-          <summary className="cursor-pointer">What To Expect Next</summary>
-          <p className="p-3 mt-3 rounded-lg bg-yellow-100 border">{j.UserArea.Details?.WhatToExpectNext}</p>
-        </details>
-
-        <details className="p-3 mt-3 rounded-lg bg-yellow-50 border">
-          <summary className="cursor-pointer">{j.DepartmentName} / {j.OrganizationName} / {j.SubAgency} </summary>
-          <blockquote className="p-3 mt-3 rounded-lg bg-yellow-100 border">
-            "{j.UserArea.Details?.AgencyMarketingStatement}"
-          </blockquote>
-        </details>
-        
+        <DetailSection 
+          title="Job Summary" 
+          content={j.UserArea.Details?.JobSummary} 
+          initiallyOpen={true} 
+        />
+        <DetailSection 
+          title="Major Duties" 
+          content={j.UserArea.Details?.MajorDuties} 
+          initiallyOpen={true}
+        />
+        <DetailSection 
+          title="Education" 
+          content={j.UserArea.Details?.Education} 
+        />
+        <DetailSection 
+          title="Requirements" 
+          content={j.UserArea.Details?.Requirements} 
+        />
+        <DetailSection 
+          title="Required Documents" 
+          content={j.UserArea.Details?.RequiredDocuments} 
+        />
+        <DetailSection 
+          title="Evaluations" 
+          content={j.UserArea.Details?.Evaluations} 
+        />
+        <DetailSection
+         title="How To Apply" 
+         content={j.UserArea.Details?.HowToApply} 
+        />
+        <DetailSection 
+          title="What To Expect Next" 
+          content={j.UserArea.Details?.WhatToExpectNext} 
+        />
+        <DetailSection 
+          title={`${j.DepartmentName} / ${j.OrganizationName}${j.SubAgency ? ` / ${j.SubAgency}` : ''}`} 
+          content={j.UserArea.Details?.AgencyMarketingStatement}
+        />
       </div>
     </div>
   );
@@ -117,4 +113,32 @@ function PayCard({ payDetails }: { payDetails: PositionRemuneration }) {
       <p className="text-right text-emerald-600 text-sm">{per}</p>
     </div>
   );
+}
+
+function DetailSection({ title, content, initiallyOpen }: {
+  title: string,
+  content: string | string[] | undefined,
+  initiallyOpen?: boolean
+}): JSX.Element | null {
+  if (!content) return null;
+
+  let contentJSX: JSX.Element;
+  if (typeof content === 'string') {
+    contentJSX = <p className="p-3 mt-3 rounded-lg bg-yellow-100 border">{content}</p>;
+  } else {
+    contentJSX = (<ul>
+      {content.map((c, i) => (
+        <li key={i}>
+          <p className="p-3 mt-3 rounded-lg bg-yellow-100 border">{content}</p>
+        </li>
+      ))}
+    </ul>);
+  }
+
+  return (
+    <details className="p-3 mt-3 rounded-lg bg-yellow-50 border" open={initiallyOpen}>
+      <summary className="cursor-pointer">{title}</summary>
+      {contentJSX}
+    </details>
+  )
 }
