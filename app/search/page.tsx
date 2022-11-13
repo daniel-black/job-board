@@ -19,9 +19,9 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
   const result = data.requestData.SearchResult as SearchResult;
 
   return (
-    <div className="px-8 py-10">
-      <div className="mb-10">
-        {result.SearchResultCountAll} Total Results for <span className="font-bold">"{searchParams.q}"</span>
+    <div className="px-8 py-10 w-full">
+      <div className="mb-10 text-neutral-600">
+        {result.SearchResultCountAll} Total Results for <span className="font-bold text-black">"{searchParams.q}"</span>
       </div>
       <ul className="space-y-6">
         {result.SearchResultItems.map(r => (
