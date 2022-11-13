@@ -1,8 +1,5 @@
-import { Sono } from '@next/font/google';
 import { GlobalNavbar } from './GlobalNavbar';
 import './globals.css';
-
-const sono = Sono();
 
 export type LayoutProps = {
   children: React.ReactNode,
