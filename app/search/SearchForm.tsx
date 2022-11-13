@@ -2,26 +2,17 @@
 
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from 'next/navigation';
-import { SearchResult } from "../../types";
 
 export function SearchForm() {
   const [job, setJob] = useState<string>('');
   const [location, setLocation] = useState<string>('');
-  const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
   const router = useRouter();
 
   // Maybe we actually want to do the data fetching in the form so we have all
   // the search results at the level of /search in state
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/search/jobs?q=${job}`);
-
-    // const res = await fetch(`http://localhost:3000/api/jobs?q=${job}`);
-    // const data = await res.json();
-
-    // const result = data.requestData.SearchResult as SearchResult;
-    
-    // setSearchResult(result);
+    router.push(`/search?q=${job}`);
   }
 
   return (
