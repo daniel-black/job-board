@@ -1,4 +1,5 @@
 import Link from "next/link";
+import formatMoney from "../../../../lib/format-money";
 import { SearchResult } from "../../../../types";
 
 export default async function JobPage({ params, searchParams }: { 
@@ -12,17 +13,28 @@ export default async function JobPage({ params, searchParams }: {
 
   const j = results.SearchResultItems[0].MatchedObjectDescriptor;
 
+
+  const min = formatMoney(+j.PositionRemuneration[0].MinimumRange);
+  const max = formatMoney(+j.PositionRemuneration[0].MaximumRange);
+
   return (
     <div className="px-8 py-10 max-w-5xl">
-      <Link href={`/search?q=${searchParams.q}`}>← back to search results</Link>
+      <Link 
+        className="hover:underline underline-offset-2 duration-100 mb-10"
+        href={`/search?q=${searchParams.q}`}
+      >
+        ← back to search results
+      </Link>
+
       <div className="flex justify-start items-center mb-10 space-x-10">
         <h1 className="text-3xl font-bold">{j.PositionTitle}</h1>
         <a className="px-6 py-1 rounded-full bg-yellow-300 border-2 font-bold text-xl border-yellow-400" href={j.ApplyURI[0]} target='_blank'>Apply</a>
       </div>
+
       <div className="space-y-6">
         <h2 className="text-xl font-semibold">Details</h2>
         <div>
-          <p>${j.PositionRemuneration[0].MinimumRange} - ${j.PositionRemuneration[0].MaximumRange} {j.PositionRemuneration[0].Description}</p>
+          <p>{min} - {max} {j.PositionRemuneration[0].Description}</p>
           <p>{j.PositionLocationDisplay}</p>
           <p>{j.UserArea.Details?.TeleworkEligible ? 'Remote' : 'In person'}</p>
         </div>

@@ -1,7 +1,7 @@
 export default function SearchLoading() {
   return (
-    <div className="p-10 rounded bg-sky-200 animate-pulse">
-      Loading...
+    <div className="px-8 py-10 animate-pulse">
+      <div className="bg-neutral-200 rounded h-8 w-56" />
     </div>
-  )
+  );
 }

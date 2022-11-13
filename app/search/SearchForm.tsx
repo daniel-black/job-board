@@ -22,7 +22,7 @@ export function SearchForm() {
         <form onSubmit={handleSubmit} className="flex flex-col space-y-8">
 
           <div className="relative">
-            <label className="text-xs text-neutral-500 absolute -top-2 -left-2 border border-yellow-400 bg-yellow-300 px-2 rounded-full -rotate-[16deg]" htmlFor="searchText">job</label>
+            <label className="text-xs text-neutral-600 absolute -top-2 -left-2 border border-yellow-400 bg-yellow-300 px-2 rounded-full -rotate-[16deg]" htmlFor="searchText">job</label>
             <input 
               value={job}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setJob(e.currentTarget.value)}
@@ -35,7 +35,7 @@ export function SearchForm() {
           </div>
 
           <div className="relative">
-            <label className="text-xs text-neutral-500 absolute -top-2.5 -left-2 border border-yellow-400 bg-yellow-300 px-2 rounded-full -rotate-[16deg]" htmlFor="location">location</label>
+            <label className="text-xs text-neutral-600 absolute -top-2.5 -left-2 border border-yellow-400 bg-yellow-300 px-2 rounded-full -rotate-[16deg]" htmlFor="location">location</label>
             <input 
               value={location}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setLocation(e.currentTarget.value)}

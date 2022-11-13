@@ -1,4 +1,5 @@
 import Link from "next/link";
+import formatMoney from "../../lib/format-money";
 import { SearchResultItem } from "../../types";
 
 type JobListItemProps = {
@@ -7,17 +8,42 @@ type JobListItemProps = {
 }
 
 export default function JobListItem({ job, q }: JobListItemProps) {
+  const min = formatMoney(+job.MatchedObjectDescriptor.PositionRemuneration[0].MinimumRange);
+  const max = formatMoney(+job.MatchedObjectDescriptor.PositionRemuneration[0].MaximumRange);
+
+  const getPayString = (): string => {
+    let s = job.MatchedObjectDescriptor.PositionRemuneration[0].Description.toLowerCase();
+    if (min === max) {
+      return `${max} ${s}`;
+    }
+    return `${min} - ${max} ${s}`;
+  }
+
+  const getLocationString = (): string => {
+    const text = job.MatchedObjectDescriptor.PositionLocationDisplay;
+    if (text === 'Multiple Locations') {
+      return `${text} (${job.MatchedObjectDescriptor.PositionLocation.length})`;
+    }
+    return text;
+  }
+
+  const mode = job.MatchedObjectDescriptor.UserArea.Details?.TeleworkEligible 
+    ? 'Remote' 
+    : 'In person';
+
   return (
-    <li className="p-3 bg-yellow-50 border rounded-lg" key={job.MatchedObjectId}>
+    <li className="py-3 px-6 bg-yellow-50 border rounded-lg" key={job.MatchedObjectId}>
       <Link 
         className="font-semibold underline underline-offset-4" 
         href={`/search/job/${job.MatchedObjectId}?q=${q}`}
       >
         {job.MatchedObjectDescriptor.PositionTitle}
       </Link>
-      <p>${job.MatchedObjectDescriptor.PositionRemuneration[0].MinimumRange} - ${job.MatchedObjectDescriptor.PositionRemuneration[0].MaximumRange} {job.MatchedObjectDescriptor.PositionRemuneration[0].Description}</p>
-      <p>{job.MatchedObjectDescriptor.PositionLocationDisplay}</p>
-      <p>{job.MatchedObjectDescriptor.UserArea.Details?.TeleworkEligible ? 'Remote' : 'In person'}</p>
+      <div className="text-neutral-600 mt-2">
+        <p>{getPayString()}</p>
+        <p>{getLocationString()}</p>
+        <p>{mode}</p>
+      </div>
     </li>
   );
 }
