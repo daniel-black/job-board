@@ -4,8 +4,16 @@ import { PositionRemuneration, SearchResult } from "../../../../types";
 
 export default async function JobPage({ params, searchParams }: { 
   params: { jobId: string },
-  searchParams: { q?: string }
+  searchParams: { Keyword?: string, LocationName?: string }
 }) {
+
+  const prevSearchParams = new URLSearchParams();
+  console.log(searchParams)
+
+  for (let [key, val] of Object.entries(searchParams)) {
+    prevSearchParams.append(key, val);
+  }
+
   const res = await fetch(`http://localhost:3000/api/jobs?q=${params.jobId}`);
   const data = await res.json();
 
@@ -17,7 +25,7 @@ export default async function JobPage({ params, searchParams }: {
 
   return (
     <div className="px-8 py-10 max-w-5xl">
-      <BackButton route={`/search?q=${searchParams.q}`} />
+      <BackButton route={`/search?${prevSearchParams.toString()}`} />
 
       {/* Position Title and Apply button */}
       <div className="my-8 flex justify-between items-center">

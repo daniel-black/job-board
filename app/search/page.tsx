@@ -19,8 +19,6 @@ export default async function SearchPage({ searchParams }: {
   jobSearchParams.append('Keyword', searchParams.Keyword);
   jobSearchParams.append('LocationName', searchParams.LocationName || '');
 
-  console.log(jobSearchParams.toString())
-
   const res = await fetch(`http://localhost:3000/api/jobs?${jobSearchParams.toString()}`);
   const data = await res.json();
 
@@ -47,7 +45,12 @@ export default async function SearchPage({ searchParams }: {
       {renderResultsLine()}
       <ul className="space-y-6">
         {result.SearchResultItems.map(r => (
-          <JobListItem job={r} q={searchParams.q} key={r.MatchedObjectId} />
+          <JobListItem 
+            job={r} 
+            keyword={searchParams.Keyword}
+            locationName={searchParams.LocationName}
+            key={r.MatchedObjectId} 
+          />
         ))}
       </ul>
     </div>
