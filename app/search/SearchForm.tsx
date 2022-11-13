@@ -12,7 +12,12 @@ export function SearchForm() {
   // the search results at the level of /search in state
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/search?q=${job}`);
+
+    const searchParams = new URLSearchParams();
+    searchParams.append('Keyword', job);
+    searchParams.append('LocationName', location);
+    
+    router.push(`/search?${searchParams.toString()}`);
   }
 
   return (

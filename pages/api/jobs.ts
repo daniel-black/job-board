@@ -5,21 +5,19 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   const { query } = req;
+  // query = { Keyword: string, LocationName: string }
 
-  if (Object.entries(query).length !== 1) {
-    res.status(400).json({ msg: 'bad request' });
-  }
-
-  const key = Object.keys(query)[0];
-  if (key !== 'q') {
-    res.status(400).json({ msg: 'key must be "q"' });
+  const searchParams = new URLSearchParams();
+  for (let [key, val] of Object.entries(query)) {
+    if (typeof val !== 'string') val = '';
+    searchParams.append(key, val);
   }
   
   const request = await fetch(
-    `https://data.usajobs.gov/api/search?Keyword=${query.q}`
+    `https://data.usajobs.gov/api/search?${searchParams.toString()}`
     , {
       headers: {
-        'Authorization-Key': 'ZGz9Q0Brvi9Em3ptH4KZtbp8I4Hel+KoHyo/VuaWMnA='
+        'Authorization-Key': process.env.JOBS_API_KEY || ''
       }
     });
   const requestData = await request.json();
