@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="text-center space-y-20 my-40">
+    <div className="text-center space-y-20 my-32">
 
       <h1 className="text-7xl font-bold">
         Do meaningful work

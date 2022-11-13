@@ -4,17 +4,17 @@ import './globals.css';
 
 const sono = Sono();
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export type LayoutProps = {
+  children: React.ReactNode,
+}
+
+export default function RootLayout(props: LayoutProps) {
   return (
-    <html lang="en" >
+    <html lang="en">
       <head />
-      <body>
+      <body className={`min-h-screen w-full`}>
         <GlobalNavbar />
-        {children}
+        {props.children}
       </body>
     </html>
   );
