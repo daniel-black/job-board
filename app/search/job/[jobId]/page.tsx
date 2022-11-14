@@ -11,7 +11,11 @@ export default async function JobPage({ params, searchParams }: any) {
     prevSearchParams.append(key, val as string);
   }
 
-  const res = await fetch(`http://localhost:3000/api/jobs?q=${params.jobId}`);
+  const url = process.env.NODE_ENV === 'production'
+    ? 'https://us-gov-jobs.vercel.app'
+    : 'http://localhost:3000';
+
+  const res = await fetch(`${url}/api/jobs?q=${params.jobId}`);
   const data = await res.json();
 
   const results = data.requestData.SearchResult as SearchResult;
